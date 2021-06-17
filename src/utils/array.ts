@@ -1,0 +1,2 @@
+export const arraylized = (o: string | number | (number|string)[]): (number|string)[] => (o instanceof Array) ? o : [o]
+export const joined = (o: string | number | (number|string)[], separator: string = ','): string => arraylized(o).map(String).join(separator)
