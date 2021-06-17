@@ -1,7 +1,7 @@
 {
   "name": "incart-api-client",
-  "version": "1.0.1",
-  "description": "inCart API written in TypeScript",
+  "version": "1.0.2",
+  "description": "inCart API client written in TypeScript",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "scripts": {
