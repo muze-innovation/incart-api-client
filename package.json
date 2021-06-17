@@ -11,14 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/peatiscoding/kolp.git"
+    "url": "git+https://github.com/muze-innovation/incart-api-client.git"
   },
   "keywords": [
-    "lambda",
-    "koa",
-    "koa-router",
-    "serverless",
-    "serverless-http"
+    "incart",
+    "client"
   ],
   "author": "Kittiphat S.",
   "license": "ISC",
