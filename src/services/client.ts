@@ -33,7 +33,7 @@ export class Client {
 
   public get axios(): AxiosInstance { return this._axios }
 
-  public constructor(public readonly config: InCartConfig, protected logger?: ClientLogger) {
+  public constructor(public readonly config: InCartConfig, public readonly logger?: ClientLogger) {
     this._axios = axios.create({
       baseURL: config.baseURL,
     })

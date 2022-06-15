@@ -1,5 +1,8 @@
 import pick from 'lodash/pick'
+import { DateTime } from 'luxon'
+import { Deserialize } from 'cerialize'
 import { InCartService } from './client'
+import { MultipleLangInCartProduct } from './models/products'
 
 type InCartProductFields = 'id' | 'sku' | 'type' | 'width' | 'height' | 'weight' | 'visibility'
   | 'name' | 'status' | 'description' | 'price' | 'stock' | 'paymentMethods' | 'media'
@@ -22,6 +25,14 @@ interface InCartProductQueryOption extends FieldsLimitOption {
   priceFrom: number
   priceTo: number
   sku: string[]
+}
+
+export interface InCartMasterProductQueryOptions {
+  limit: number
+  offset: number
+  search?: string,
+  lastUpdate?: Date
+  traceId?: string
 }
 
 export class InCartProductsService extends InCartService {
@@ -56,5 +67,40 @@ export class InCartProductsService extends InCartService {
   public async getBySku(storeId: string, sku: string): Promise<any> {
     const res = await this.axios.get(`/pcms/${storeId}/api/v1/products/${sku}`)
     return res.data
+  }
+
+  public async getMasterProductsForSync(
+    storeId: string,
+    opts: InCartMasterProductQueryOptions,
+  ): Promise<MultipleLangInCartProduct[]> {
+    const params: any = {
+      limit: opts.limit,
+      offset: opts.offset,
+      search: opts.search,
+      traceId: opts.traceId || `${Math.random() * 99999}`,
+    }
+    if (opts.lastUpdate) {
+      const dt = DateTime.fromJSDate(opts.lastUpdate)
+      if (!dt.isValid) {
+        throw new Error(
+          `Cannot sync with invalidate date value: ${opts.lastUpdate}`,
+        )
+      }
+      params.lastSyncTimestamp = dt.setZone('UTC').toISO()
+    }
+
+    try {
+      const res = await this.axios.get(
+        `/pcms/${storeId}/api/v1/products/master`,
+        { params },
+      )
+      return Deserialize(res.data.collection, MultipleLangInCartProduct)
+    } catch (error: any) {
+      this.client.logger?.log(
+        'WARNING: Unable to fetch master products from inCart',
+        error,
+      )
+      throw error
+    }
   }
 }
