@@ -1,4 +1,4 @@
-export { Client } from './services/client'
+export { Client, InCartConfig } from './services/client'
 export { InCartAuthAdminService } from './services/authAdmin'
 export { InCartOrdersService } from './services/orders'
 export { OrderService } from './services-core/orders'
