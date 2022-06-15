@@ -156,6 +156,49 @@ describe('products', () => {
       it('can list products with attributes', async () => {
 
       })
+
+      describe('can list master products', () => {
+        it('can list with limit', async () => {
+          const [e, r] = await catched(() =>
+            srv.getMasterProductsForSync(simpleStoreId, {
+              limit: 2,
+              offset: 0,
+            }),
+          )
+          expect(e).toBeNull()
+          expect(r instanceof Array).toBeTruthy()
+          expect(r?.length).toEqual(2)
+          expect(r?.map((o) => o.sku)).toContain('PD000001')
+          expect(r?.map((o) => o.sku)).toContain('jest-001')
+        })
+
+        it('can list with offset', async () => {
+          const [e, r] = await catched(() =>
+            srv.getMasterProductsForSync(simpleStoreId, {
+              limit: 2,
+              offset: 2,
+            }),
+          )
+          expect(e).toBeNull()
+          expect(r instanceof Array).toBeTruthy()
+          expect(r?.length).toEqual(1)
+          expect(r?.map((o) => o.sku)).toContain('jest-002')
+        })
+
+        it('can list with search', async () => {
+          const [e, r] = await catched(() =>
+            srv.getMasterProductsForSync(simpleStoreId, {
+              limit: 5,
+              offset: 0,
+              search: '02',
+            }),
+          )
+          expect(e).toBeNull()
+          expect(r instanceof Array).toBeTruthy()
+          expect(r?.length).toEqual(1)
+          expect(r?.map((o) => o.sku)).toContain('jest-002')
+        })
+      })
     })
   })
 })
