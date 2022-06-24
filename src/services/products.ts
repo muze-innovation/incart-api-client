@@ -30,7 +30,9 @@ interface InCartProductQueryOption extends FieldsLimitOption {
 export interface InCartMasterProductQueryOptions {
   limit: number
   offset: number
-  search?: string,
+  sortBy?: string
+  sortDirection?: string
+  keyword?: string,
   lastUpdate?: Date
   traceId?: string
 }
@@ -76,7 +78,9 @@ export class InCartProductsService extends InCartService {
     const params: any = {
       limit: opts.limit,
       offset: opts.offset,
-      search: opts.search,
+      sortBy: opts.sortBy,
+      sortDirection: opts.sortDirection,
+      keyword: opts.keyword,
       traceId: opts.traceId || `${Math.random() * 99999}`,
     }
     if (opts.lastUpdate) {
