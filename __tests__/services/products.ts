@@ -190,7 +190,7 @@ describe('products', () => {
             srv.getMasterProductsForSync(simpleStoreId, {
               limit: 5,
               offset: 0,
-              search: '02',
+              keyword: '002',
             }),
           )
           expect(e).toBeNull()
