@@ -3,7 +3,7 @@ import { InCartService } from './client'
 
 export class InCartCartService extends InCartService {
 
-  public async hardCheckout(storeId: string, hardCheckoutRequest: InCartHardCheckoutRequest): Promise<{ storeId: string, orderId: string, payableLink: string }> {
+  public async hardCheckout(storeId: string, hardCheckoutRequest: InCartHardCheckoutRequest): Promise<{ storeId: string, orderId: string, payableLink: string, orderToken: string }> {
     const { data } = await this.axios.post(`/pcms/${storeId}/api/v1/carts/hard-checkout`, hardCheckoutRequest)
     return data
   }
