@@ -47,7 +47,7 @@ export class OrderService extends InCartService {
     return data
   }
   
-  public async getOrderById(storeId: string, orderId: string): Promise<EntityList> {
+  public async getOrderById(storeId: string, orderId: string): Promise<OrderEntity> {
     const { data } = await this.axios.get(`${storeId}/order/${orderId}`)
     return data
   }
