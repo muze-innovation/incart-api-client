@@ -56,7 +56,7 @@ export interface InCartHardCheckoutRequest {
   /**
    * Dictate the order token to be used.
    */
-  orderToken: string
+  orderToken?: string
 
   /**
    * Items to checkout
@@ -82,7 +82,7 @@ export interface InCartHardCheckoutRequest {
   /**
    * Payment Option
    */
-  payment: InCartHardCheckoutPayment
+  payment?: InCartHardCheckoutPayment
 
   /**
    * Reference
@@ -90,6 +90,8 @@ export interface InCartHardCheckoutRequest {
   reference: InCartHardCheckoutReference
 
   orderStatus: 'new' | 'paid'
+
+  orderId?: number
 }
 
 export interface InCartShippingOption {
