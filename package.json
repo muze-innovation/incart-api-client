@@ -2,11 +2,15 @@
   "name": "incart-api-client",
   "version": "1.0.9",
   "description": "inCart API client written in TypeScript",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/esm/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf node_modules/ && rm -rf libs/",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
+    "clean": "rm -rf node_modules/ && rm -rf dist/",
     "test": "jest --config=jest.config.ts"
   },
   "repository": {
