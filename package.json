@@ -2,8 +2,8 @@
   "name": "incart-api-client",
   "version": "1.0.7",
   "description": "inCart API client written in TypeScript",
-  "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
     "clean": "rm -rf node_modules/ && rm -rf libs/",
