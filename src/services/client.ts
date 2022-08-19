@@ -13,6 +13,12 @@ export interface InCartConfig {
   baseURL: string
 }
 
+interface LogOption {
+  requestPrefix: string
+  responsePrefix: string
+  errorPrefix: string
+}
+
 export interface ClientLogger {
   log(...args: any[]): void
   error(...args: any[]): void
@@ -33,7 +39,7 @@ export class Client {
 
   public get axios(): AxiosInstance { return this._axios }
 
-  public constructor(public readonly config: InCartConfig, public readonly logger?: ClientLogger) {
+  public constructor(public readonly config: InCartConfig, public readonly logger?: ClientLogger, logOption?: LogOption) {
     this._axios = axios.create({
       baseURL: config.baseURL,
     })
@@ -48,21 +54,18 @@ export class Client {
           'x-api-key': config.apiKey
         }
       }
+      this.logger?.log(`${logOption?.requestPrefix || 'REQ >'} ${conf.url}`, conf)
       return conf
     })
     this._axios.interceptors.response.use((resp) => {
+      this.logger?.log(`${logOption?.responsePrefix || 'RESP <'} ${resp.config.url}`, resp.data)
       return resp
     }, (error: AxiosError) => {
-      const conf = error.request
       this.logger?.log('INCART SERVICE FAILED.')
-      if (conf) {
-        const printable = `.. RQ > ${conf.method?.toUpperCase()} ${conf.path}`
-        this.logger?.log(printable)
-      }
-      this.logger?.log(`.. ER < message ${error.message}`)
+      this.logger?.log(`${logOption?.errorPrefix || '.. ER <'} < message ${error.message}`)
       if (error.response) {
         const message = get(error.response, 'data.info.message', get(error.response, 'data.message', error.message))
-        this.logger?.log(`.. ER < detail ${JSON.stringify(error.response?.data)}`)
+        this.logger?.log(`${logOption?.errorPrefix || '.. ER <'} < detail ${JSON.stringify(error.response?.data)}`)
 
         throw new Error(message)
       }
