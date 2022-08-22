@@ -21,6 +21,9 @@
     "incart",
     "client"
   ],
+  "engines": {
+    "node": ">=14"
+  },
   "author": "Kittiphat S.",
   "license": "ISC",
   "types": "./src/index.ts",
