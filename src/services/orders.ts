@@ -105,7 +105,7 @@ export class InCartOrdersService extends InCartService {
     await this.axios.put(`/pcms/${storeId}/api/v1/orders/${orderId}/payment-methods`, { paymentMethodId })
   }
 
-  public async listOrders(storeId: string, params: InCartListOrdersOption): Promise<{ collection: InCartOrder[], meta: InCartOrderMeta[] }> {
+  public async listOrders(storeId: string, params: InCartListOrdersOption): Promise<{ collection: InCartOrder[], meta: InCartOrderMeta }> {
     const r = await this.axios.get(`/pcms/${storeId}/api/v1/orders`, { params })
     return r.data
   }
