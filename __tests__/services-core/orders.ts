@@ -5,7 +5,9 @@ jest.setTimeout(30000)
 
 const config = getConfiguration('qa', 'order')
 const storeId = 'storeTest'
-describe('authAdminService', () => {
+
+// Service has been removed from 'QA'
+describe.skip('orderAdminService', () => {
   it('can create order', async () => {
     const client = new Client(config)
     const service = new OrderService(client)

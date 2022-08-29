@@ -1,5 +1,8 @@
 import { InCartService } from './client'
-import { InCartPaymentOption, InCartShippingOption, InCartUpdateEmailOrMobileOrderRequest, InCartUpdateOrderAddressRequest } from './models/orders'
+import {
+  InCartPaymentOption, InCartShippingOption, InCartUpdateEmailOrMobileOrderRequest, InCartUpdateOrderAddressRequest, InCartListOrdersOption,
+  InCartOrder, InCartOrderMeta, InCartOrderDetail
+} from './models/orders'
 
 export class InCartOrdersService extends InCartService {
 
@@ -19,7 +22,7 @@ export class InCartOrdersService extends InCartService {
   }
 
   public async updateOrderShipment(storeId: string, orderId: number, trackingNumber: string): Promise<{ success: boolean }> {
-    const tracking = trackingNumber !== '' &&  { track: { trackNumber: trackingNumber }}
+    const tracking = trackingNumber !== '' && { track: { trackNumber: trackingNumber } }
     return this.axios.post(`/pcms/${storeId}/api/v1/shipments`, {
       orderId,
       ...tracking
@@ -55,9 +58,9 @@ export class InCartOrdersService extends InCartService {
   }
 
   public async updateAddress(storeId: string, orderId: number, addressType: 'billing' | 'shipping', updateAddressRequest: InCartUpdateOrderAddressRequest): Promise<boolean> {
-    switch(addressType) {
-    case 'billing': return this.updateBillingAddress(storeId, orderId, updateAddressRequest)
-    case 'shipping': return this.updateShippingAddress(storeId, orderId, updateAddressRequest)
+    switch (addressType) {
+      case 'billing': return this.updateBillingAddress(storeId, orderId, updateAddressRequest)
+      case 'shipping': return this.updateShippingAddress(storeId, orderId, updateAddressRequest)
     }
   }
 
@@ -69,7 +72,7 @@ export class InCartOrdersService extends InCartService {
    * @return
    */
   public async removeBillingAddress(storeId: string, orderId: number): Promise<boolean> {
-    return this.updateBillingAddress(storeId, orderId, <any> {
+    return this.updateBillingAddress(storeId, orderId, <any>{
       country: null,
       district: null,
       subDistrict: null,
@@ -100,5 +103,15 @@ export class InCartOrdersService extends InCartService {
 
   public async updatePaymentMethod(storeId: string, orderId: number, paymentMethodId: number): Promise<void> {
     await this.axios.put(`/pcms/${storeId}/api/v1/orders/${orderId}/payment-methods`, { paymentMethodId })
+  }
+
+  public async listOrders(storeId: string, params: InCartListOrdersOption): Promise<{ collection: InCartOrder[], meta: InCartOrderMeta }> {
+    const r = await this.axios.get(`/pcms/${storeId}/api/v1/orders`, { params })
+    return r.data
+  }
+
+  public async listOrderDetail(storeId: string, orderId: number): Promise<InCartOrderDetail> {
+    const r = await this.axios.get(`/pcms/${storeId}/api/v1/orders/${orderId}`)
+    return r.data
   }
 }
