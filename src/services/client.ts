@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosError } from 'axios'
 import get from 'lodash/get'
 import { InCartAccessTokenResponse } from './models/auth'
+import { InCartError } from '../utils/error'
 
 export type InCartEnv = 'alpha' | 'qa' | 'prod' | 'A' | 'Q' | 'P'
 
@@ -66,8 +67,8 @@ export class Client {
       if (error.response) {
         const message = get(error.response, 'data.info.message', get(error.response, 'data.message', error.message))
         this.logger?.log(`${logOption?.errorPrefix || '.. ER <'} < detail ${JSON.stringify(error.response?.data)}`)
-
-        throw new Error(message)
+        const err = new InCartError(message, error.response?.data)
+        throw err
       }
       throw error
     })
