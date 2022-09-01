@@ -1,6 +1,6 @@
 import { InCartService } from './client'
 
-export interface Stock {
+export interface StockLevelBySku {
   id: number
   sku: string
   stockType: string
@@ -10,7 +10,7 @@ export interface Stock {
 }
 
 export interface CheckStockBySkuResponse {
-  stocks: Stock[]
+  stocks: StockLevelBySku[]
 }
 
 export class InCartStocksService extends InCartService {
