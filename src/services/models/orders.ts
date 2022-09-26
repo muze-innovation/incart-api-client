@@ -8,18 +8,18 @@ export interface InCartHardCheckoutAddress {
   firstname: string
   lastname?: string
   mobile?: string
-  mobileCountryCode: string
-  street: string
-  subDistrict: string
-  district: string
-  province: string
+  mobileCountryCode?: string
+  street?: string
+  subDistrict?: string
+  district?: string
+  province?: string
   country: 'TH'
-  postcode: string
+  postcode?: string
   vatId?: string
   company?: string
   companyBranch?: string
   companyBranchId?: string
-  weight: number
+  weight?: number
   latitude?: string
   longitude?: string
 }
