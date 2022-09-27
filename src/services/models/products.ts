@@ -549,8 +549,8 @@ export class MultipleLangInCartProduct extends BaseInCartProduct {
   @autoserializeAs('backInStockTimeStamp')
   backInStockTimeStamp: number = 0
 
-  @autoserializeAs('productStock')
-  productQty?: number | null
+  @autoserializeAs('productQty')
+  productQty?: number
 
   constructor(from: MultipleLangInCartProduct| null = null) {
     super(from)
