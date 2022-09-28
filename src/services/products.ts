@@ -35,7 +35,7 @@ export interface InCartMasterProductQueryOptions {
   keyword?: string,
   lastUpdate?: Date
   traceId?: string
-  needQty?: boolean
+  fetchQty?: boolean
 }
 
 export class InCartProductsService extends InCartService {
@@ -83,7 +83,7 @@ export class InCartProductsService extends InCartService {
       sortDirection: opts.sortDirection,
       keyword: opts.keyword,
       traceId: opts.traceId || `${Math.random() * 99999}`,
-      needQty: opts.needQty,
+      fetchQty: opts.fetchQty,
     }
     if (opts.lastUpdate) {
       const dt = DateTime.fromJSDate(opts.lastUpdate)
